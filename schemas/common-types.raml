@@ -1,0 +1,17 @@
+#%RAML 1.0 Library
+usage: Custom types
+
+types:
+
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+        description: Error code
+      message:
+        type: string
+        description: Error message
+      description:
+        type: string
+        description: Description of what happened.

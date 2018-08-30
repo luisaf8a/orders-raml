@@ -1,0 +1,71 @@
+#%RAML 1.0 ResourceType
+
+  uses:
+    std: ../schemas/common-types.raml
+
+  description: Entity representing a <<resourcePathName|!singularize>>
+  get:
+    description: |
+      Get the <<resourcePathName|!singularize>>
+      with <<resourcePathName|!singularize>>Id =
+      {<<resourcePathName|!singularize>>Id}
+    responses:
+      200:
+        headers:
+          ETag:
+            description: Version of the entity returned
+        body:
+          application/json:
+            type: <<get-response-type>>
+            example: <<get-response-example>>
+      404:
+        body:
+          application/json:
+            example: |
+              {"message": "<<resourcePathName|!singularize>> not found" }
+      500:
+        body:
+          application/json:
+            type: std.Error
+  put?:
+    description: |
+      Updates the resource <<resourcePathName|!singularize>> asynchronously.
+    body:
+      application/json:
+        type: <<put-request-type>>
+        example: <<put-request-example>>
+    responses:
+      202:
+        description: The request has been accepted.
+        headers:
+          Location:
+            example: <<put-location-header-example>>
+            description: Contains the endpoint to monitor the status
+      500:
+        body:
+          application/json:
+            type: std.Error
+  delete?:
+    description: |
+      Deletes the <<resourcePathName|!singularize>>
+      with <<resourcePathName|!singularize>>Id =
+      {<<resourcePathName|!singularize>>Id}
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "<<resourcePathName|!singularize>> was deleted"
+              }
+      404:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "<<resourcePathName|!singularize>> not found"
+              }
+      500:
+        body:
+          application/json:
+              type: std.Error

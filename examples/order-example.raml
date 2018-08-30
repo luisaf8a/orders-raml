@@ -1,0 +1,36 @@
+#%RAML 1.0 NamedExample
+value: |
+  {
+   "orderId":"509463a0-ab4f-11e8-98d0-529269fb1459",
+   "customerId":"509463a0-ab4f-11e8-98d0-529269fb1460",
+   "customerName":"Luisa Ochoa",
+   "customerEmail":"lu@email.com",
+   "customerPhoneNumber":"0450000000",
+   "customerDeliveryAddress":{
+      "type":"Postal",
+      "line1":"20 Some st",
+      "country":"AU",
+      "city":"Some city",
+      "state":"NSW",
+      "postCode":"2000"
+   },
+   "purchaseOrder":{
+     "items":[
+         {
+            "itemId":"2416df46-ab50-11e8-98d0-529269fb1459",
+            "productId":"2566df46-ab50-11e8-98d0-529269fb1459",
+            "productName":"Some product",
+            "productDescription":"Some awesome item",
+            "price":{
+               "currency":"AUD",
+               "currencyValue":40.50
+            },
+            "quantity":1
+         }
+      ],
+      "price":{
+         "currency":"AUD",
+         "currencyValue":40.50
+      }
+    }
+  }

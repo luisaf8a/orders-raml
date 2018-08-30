@@ -1,0 +1,9 @@
+#%RAML 1.0 Library
+
+uses:
+  com: ../schemas/common-types.raml
+
+resourceTypes:
+  collection: !include collection.raml
+  item-async: !include collection-item-async.raml
+  status: !include status.raml

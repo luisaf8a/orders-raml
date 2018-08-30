@@ -1,0 +1,62 @@
+#%RAML 1.0
+
+title: Orders API
+version: v1.0
+baseUri: http://orders.com/api/{version}
+
+mediaType: application/json
+protocols: [ HTTP, HTTPS ]
+
+securitySchemes:
+  oauth2_0: !include securitySchemes/oauth2_0.raml
+securedBy: oauth2_0
+
+resourceTypes:
+  collection: !include resourceTypes/collection.raml
+  item-async: !include resourceTypes/collection-item-async.raml
+  status: !include resourceTypes/status.raml
+
+traits:
+  cacheable: !include traits/content-cacheable.raml
+  pageable: !include traits/pageable.raml
+  sortable: !include traits/sortable.raml
+
+uses:
+  res: schemas/resources.raml
+  std: schemas/common-types.raml
+
+/orders:
+  displayName: Order resource
+  type:
+    collection:
+      get-response-type: res.GetOrdersResponse
+      get-response-example: !include examples/orders-example.raml
+      post-request-type: res.Order
+      post-request-example: !include examples/order-example.raml
+      location-header-example: /orders/123456
+  get:
+    is: [ pageable, sortable ]
+  post:
+  /{orderId}:
+    type:
+      item-async:
+        get-response-type: res.Order
+        get-response-example: !include examples/order-example.raml
+        put-location-header-example: /orders/123456/status
+        put-request-type: res.Order
+        put-request-example: !include examples/order-example.raml
+    get:
+      is: [ cacheable ]
+    put:
+    delete:
+    /status:
+      type:
+        status:
+          get-status-response-200 : |
+            {"status":"processing"}
+          get-status-response-303 : |
+            {"status":"success"}
+          status-location-header: |
+            /orders/123456
+          status-delete-response: |
+            {"status": "canceled"}

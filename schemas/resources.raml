@@ -1,0 +1,99 @@
+#%RAML 1.0 Library
+usage: Types for orders
+
+types:
+
+  Order:
+    type: object
+    properties:
+      orderId:
+        type: string
+        description: Order identifier.
+      customerId:
+        type: string
+        description: Customer identifier.
+      customerName:
+        type: string
+        description: Customer name
+      customerEmail?:
+        type: string
+        description: Customer email address
+      customerPhoneNumber?:
+        type: string
+        description: Customer phone number
+      customerDeliveryAddress:
+        type: Address
+        description: Delivery address
+      purchaseOrder:
+        type: PurchaseOrder
+        description: Purchase order information, items and price.
+
+  PurchaseOrder:
+    type: object
+    properties:
+      items:
+        type: Item[]
+      price:
+        type: Price
+        description: Total price
+
+  Item:
+    type: object
+    description: Item purchased details
+    properties:
+      itemId:
+        type: string
+        description: Item identifier
+      productId:
+        type: string
+        description: Product identifier
+      productName:
+        type: string
+        description: Product name
+      productDescription?:
+        type: string
+        description: Product description
+      price:
+        type: Price
+      quantity:
+        type: integer
+        description: Number of items ordered
+
+  Address:
+    type: object
+    properties:
+      type?:
+        type: string
+        description: Address type (postal address, home address)
+      line1:
+        type: string
+        description: Street address line 1
+      line2?:
+        type: string
+        description: Street address line 2
+      country:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      postCode:
+        type: string
+
+  Price:
+    properties:
+      currency:
+        type: string
+        description: Currency code. e.g. AUD, USD.
+      currencyValue:
+        type: number
+        description: Amount value.
+
+  Status:
+    description: Satus of an asynchronous operation.
+    properties:
+      status:
+        enum: [processing, canceled, failed, success]
+
+  GetOrdersResponse:
+    type: Order[]

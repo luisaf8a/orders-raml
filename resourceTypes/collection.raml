@@ -1,0 +1,79 @@
+#%RAML 1.0 ResourceType
+
+  uses:
+    std: ../schemas/common-types.raml
+    res: ../schemas/resources.raml
+
+  description: Collection of available <<resourcePathName>>.
+  get:
+    headers:
+      If-Modified-Since:
+        description: |
+          Specifies the last modified date of the cached copy of
+          the resource. The value is the same as the previously returned in the
+          response header Last-Modified.
+        required: false
+    description: Get a list of <<resourcePathName>>.
+    responses:
+      304:
+        description: |
+          The resource has not been modified, the body is empty and the version cached by the API
+          consumer client may be used.
+      200:
+        headers:
+          Last-Modified:
+            description: |
+              Response header sent to specify the last modified date of the requested
+              collection.
+          Cache-Control:
+            description: |
+              If set to no-cache it forces to check the cache validity
+              by submitting the request to the origin before using the cache copy.
+            required: false
+          Pagination-Count:
+            description: |
+              Total number of items
+            required: false
+          Pagination-Page:
+            description: |
+              Current page number
+            required: false
+          Pagination-Limit:
+            description: |
+              Number of items returned
+            required: false
+        body:
+          application/json:
+            type: <<get-response-type>>
+            example: <<get-response-example>>
+      500:
+        description: Internal server error, something went wrong!
+        body:
+          application/json:
+            type: std.Error
+  post:
+    description: Add a new <<resourcePathName|!singularize>>.
+    body:
+      application/json:
+        type: <<post-request-type>>
+        example: <<post-request-example>>
+    responses:
+      201:
+        headers:
+          Location:
+            description: Endpoint to the resource <<resourcePathName|!singularize>> created
+            example: <<location-header-example>>
+        body:
+          application/json:
+            example: |
+              { "message": "The <<resourcePathName|!singularize>> has been succesfully created" }
+      400:
+        body:
+          application/json:
+            type:
+            example: |
+              {"message": "The <<resourcePathName|!singularize>> was not found"}
+      500:
+        body:
+          application/json:
+            type: std.Error

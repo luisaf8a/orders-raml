@@ -1,0 +1,56 @@
+#%RAML 1.0 ResourceType
+
+  uses:
+    std: ../schemas/common-types.raml
+    res: ../schemas/resources.raml
+
+  description: |
+    Represents the status of an async operation processed
+    on the <<resourcePathName|!singularize>>
+  get:
+    description: |
+      Get the status of an async operation performed on the
+      <<resourcePathName|!singularize>>
+      with <<resourcePathName|!singularize>>Id =
+      {<<resourcePathName|!singularize>>Id}
+    responses:
+      200:
+        description: processing
+        body:
+          application/json:
+            type: res.Status
+            example: <<get-status-response-200>>
+      303:
+        description: finished processing, success!
+        headers:
+          Location:
+            example: <<status-location-header>>
+            description: |
+              The order updating has finished successfully. Use the URI provided in the Location header to get the result.
+          body:
+            type: res.Status
+            example: <<get-status-response-303>>
+      500:
+        description: something went wrong
+        body:
+          application/json:
+            type: std.Error
+  delete?:
+    description: |
+      Cancels the async process on the resource
+      <<resourcePathName|!singularize>>
+      with <<resourcePathName|!singularize>>Id =
+      {<<resourcePathName|!singularize>>Id}
+    responses:
+        200:
+          description: |
+              The process has been cancelled.
+          body:
+            application/json:
+              type: res.Status
+              example: <<status-delete-response>>
+        500:
+          description: something went wrong
+          body:
+            application/json:
+              type: std.Error
