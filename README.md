@@ -2,10 +2,10 @@
 
 Design a RESTful API using RAML that contains a single resource, orders, and allows the following:
 
-•   List orders **GET /orders**
-•   Create a new order **POST /orders**
-•   Update an order **PUT /orders/{orderId} (asynchronous)**
-•   Deletes an order **DELETE /orders/{orderId}**
+* List orders **GET /orders**
+* Create a new order **POST /orders**
+* Update an order **PUT /orders/{orderId} (asynchronous)**
+* Deletes an order **DELETE /orders/{orderId}**
 
 You may constrain the order object to customer details, purchase order and line items, and the format to JSON.
 
